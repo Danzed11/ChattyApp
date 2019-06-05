@@ -4,6 +4,11 @@ import MessageList from './MessageList.jsx';           //Going to need to render
 import ChatBar from './ChatBar.jsx';
 
 export default class App extends Component {
+
+  addMessage(newMessage) {
+    newMessage.id = this.state.messages.length +1;
+    this.setState({messages: this.state.messages.concat(newMessage)});
+} 
   constructor(props) {
     super(props);
     this.state = {
@@ -22,13 +27,18 @@ export default class App extends Component {
       ]
     };
   };
-// Called after component is rendered and attached to DOM, but not yet visible.
-// componentDidMount() {
-//   console.log("componentDidMount invoked, commencing 3 second delay")
-//   setTimeout(() => {
-//     this.setState( /* PLACE HOLDER */ )
-//   }, 3000);
-// };
+
+  componentDidMount() {
+    console.log("componentDidMount invoked, 3 second delay incoming");
+    const newMessage = {id: 3, username: 'Michelle', content: 'Wassa wassa wassa WASSSSUUUPPP BITCONNNEEEEEEEEECT'};
+    const messages = this.state.messages.concat(newMessage);
+    //Update the state of the app component.
+    //Calling setState() will re-render in App.jsx and all child components
+    setTimeout(() => {
+      this.setState( {messages: messages} )
+    }, 3000);
+
+  };
 
   render() {
     console.log("Rendering <App/>");
@@ -39,7 +49,8 @@ export default class App extends Component {
           <a href="/" className="navbar-brand">Chatty App</a>
         </nav>
           <MessageList messages={this.state.messages} />
-          <ChatBar name={this.state.currentUser.name}/>
+          <ChatBar name={this.state.currentUser.name}
+          onNewMessage={this.addMessage.bind(this)} />
       </div>
     );
   }
