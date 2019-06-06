@@ -1,18 +1,29 @@
 import React, {Component} from 'react';
 
-import MessageList from './MessageList.jsx';           //Going to need to render the MessageList (Which will itself handle the Message)
+import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
+const ws = new WebSocket("ws://0.0.0.0:3001");
+// const wss = new WebSocket.Server({port: 3000});
+// wss.on('connection', function connection(ws) {
+//   ws.on('message', function incoming(message) {
+//     console.log('received: %s', message);
+//   });
+//   ws.send("hey there")
+// });
 
 export default class App extends Component {
 
-  addMessage(newMessage) {
+  addMessage = (newMessage) => {
     newMessage.id = this.state.messages.length +1;
-    this.setState({messages: this.state.messages.concat(newMessage)});
+    //this.setState({messages: this.state.messages.concat(newMessage)});
+     ws.send(JSON.stringify(newMessage));
+     //ws.send(`User ${newMessage.username} said ${newMessage.content}`);
+     console.log(newMessage);
 } 
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {name: "Kramer"},
+      currentUser: {name: ""},
       messages: [
         {
           id: 1,
@@ -29,15 +40,15 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    console.log("componentDidMount invoked, 3 second delay incoming");
-    const newMessage = {id: 3, username: 'Michelle', content: 'Wassa wassa wassa WASSSSUUUPPP BITCONNNEEEEEEEEECT'};
-    const messages = this.state.messages.concat(newMessage);
-    //Update the state of the app component.
-    //Calling setState() will re-render in App.jsx and all child components
-    setTimeout(() => {
-      this.setState( {messages: messages} )
-    }, 3000);
 
+    ws.onopen = (ws) => {
+      console.log("Succesfully connected Chatty to WebSocket Server");
+    };
+    ws.onmessage = (broadcast) => {
+      let broadcastMessage = JSON.parse(broadcast.data);
+      let messages = this.state.messages.concat(broadcastMessage);
+      console.log(this.setState( {messages: messages} ));
+    };
   };
 
   render() {
@@ -49,8 +60,10 @@ export default class App extends Component {
           <a href="/" className="navbar-brand">Chatty App</a>
         </nav>
           <MessageList messages={this.state.messages} />
-          <ChatBar name={this.state.currentUser.name}
-          onNewMessage={this.addMessage.bind(this)} />
+          <ChatBar 
+            name={this.state.currentUser.name}
+            onNewMessage={this.addMessage.bind(this)} 
+            />
       </div>
     );
   }

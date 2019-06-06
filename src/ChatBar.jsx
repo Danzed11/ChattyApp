@@ -33,6 +33,3 @@ export default class Chatbar extends Component {
     });
   };
 };
-function enter () {
-  const newInput = {id: this.state.messages[0] +1, username: this.props.name, content: this.props.username};
-}
