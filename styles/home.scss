@@ -67,6 +67,16 @@ h1 {
   font-weight: 700;
 }
 
+.usercountTicker {
+  line-height: 60px;
+  display: flex;
+  float: right;
+  margin-right: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
 .navbar {
   background: tomato;
   border-bottom: 1px solid black;
@@ -95,4 +105,16 @@ h1 {
   float: right;
   color: black;
   font-size: 20px;
+}
+
+.notification {
+  display: flex;
+  padding: 5px;
+}
+
+.notification-content {
+  font-style: italic;
+  margin: 5px;
+  padding: 0 10px;
+  flex: 8;
 }

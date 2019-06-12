@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 
 export default class Chatbar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: this.props.name
-    }
-  }
+
   
   componentDidMount() {
-    const chatBar = this;
     const chatbarInput = document.querySelector('.chatbar-message');
     // Event Listener on keypress Enter
     chatbarInput.addEventListener('keypress', (e) => {
@@ -24,15 +18,15 @@ export default class Chatbar extends Component {
       };
     });
 
+    //Changing username
     const chatbarUsername = document.querySelector('.chatbar-username');
       chatbarUsername.addEventListener('keypress', (e) => {
       if (e.keyCode === 13) {
-        console.log('this name chatbar:', this.state.user)
         let oldUsername = this.props.name ? this.props.name : 'Anonymous';
        let notification = oldUsername + " has changed their username to " + e.target.value
        console.log(this.props, e.target.value);
        let input = {
-        username: e.target.value, //(this.state.user === 0) ? 'Anonymous': this.state.user,
+        // username: e.target.value, //(this.state.user === 0) ? 'Anonymous': this.state.user,
         content: notification
       }
         this.props.onNewUsername(input);
@@ -40,7 +34,6 @@ export default class Chatbar extends Component {
     });
   };
 
-  
   render() {
     console.log("Rendering <ChatBar/>");
     return (
