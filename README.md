@@ -5,6 +5,7 @@ A minimal and light dev environment for ReactJS.
 
 ### Usage
 Download ChattyApp's Server
+```npm start```
 
 [ChattyApp Server](https://github.com/Danzed11/Chatty-Server)
 
