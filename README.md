@@ -6,7 +6,7 @@ A minimal and light dev environment for ReactJS.
 ### Usage
 Download ChattyApp's Server
 
-[a link](https://github.com/Danzed11/Chatty-Server)
+[ChattyApp Server](https://github.com/Danzed11/Chatty-Server)
 
 Clone the boilerplate and create your own git repo.
 
